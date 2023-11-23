@@ -2,6 +2,9 @@ import { Alert, Button, Card, CardActions, CardContent, CardMedia, Container } f
 import React, { useState } from "react";
 import { useUsuario } from "../Context/UsuarioContext";
 import { useQueryPokemonRandom } from "../queries/queryPokemonRandom";
+import {useRegistroPokedex} from "../queries/queryRegistroPokedex";
+import { useMutation } from "react-query";
+
 export default function RandomPoke() {
     const { data: pokemon, isLoading: cargandoPokes, isSuccess, isError } = useQueryPokemonRandom();
     const { usuario } = useUsuario();
@@ -22,21 +25,22 @@ export default function RandomPoke() {
         },
     });
 
+
+    // TODO: primero armar una funcion que sea un onsubmit -> generar un objeto. 
+    // objeto generado -> mutate.
+
     // mutate que haga el registro en el backend
 
     // backend; api, migracion y la funcion en el repo.
-    let urlBase = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+    let urlBase = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/";
 
     return (
         <Container>
-
-
             {isError && <Alert severity="error">ese pokemon no existe</Alert>}
-
             <Card>
                 {
                     !cargandoPokes &&
-                    <CardMedia sx={{ maxWidth: 200 }} component="img" image={pokemon && urlBase + pokemon?.num_pokedex + ".png"} />
+                    <CardMedia sx={{ maxWidth: 200 }} component="img" image={pokemon && urlBase + pokemon?.num_pokedex + ".svg"} />
                 }
                 <CardContent>
                     numero : {pokemon?.num_pokedex} <br />
